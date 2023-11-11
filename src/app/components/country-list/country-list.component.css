@@ -1,0 +1,7 @@
+.country-btn:hover {
+	cursor: pointer;
+	filter: brightness(75%);
+	transform: scale(1.025);
+	color: #003666;
+	transition: all .5s ease;
+}

@@ -1,0 +1,58 @@
+<div class="container mb-4">
+	<div class="py-5 text-center">
+		<h2>Add a new product</h2>
+	</div>
+
+	<div class="row">
+		<div class="col-md-4 order-md-2 mb-4">
+			<h4 class="d-flex justify-content-between align-items-center mb-3">
+				<span class="text-muted">Choose the product's origin</span>
+			</h4>
+			<div class="pre-scrollable">
+				<app-country-list (countryEv)="selectCountry($event)"></app-country-list>
+			</div>
+		</div>
+
+		<div class="col-md-8 order-md-1">
+			<h4 class="mb-3">Product Data</h4>
+			<form [formGroup]="prodForm" (ngSubmit)="submitProd()">
+				<div class="row">
+					<div class="col-md-6 mb-3">
+						<label for="code">Code</label>
+						<input type="text" class="form-control" id="code" formControlName="code">
+					</div>
+					<div class="col-md-6 mb-3">
+						<label for="desc">Description</label>
+						<input type="text" class="form-control" id="desc" placeholder="" formControlName="desc">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-6 mb-3">
+						<label for="price">Price</label>
+						<input type="number" min="1" class="form-control" id="price" formControlName="price">
+					</div>
+					<div class="col-md-6 mb-3">
+						<label for="stock">Stock</label>
+						<input type="number" min="0" class="form-control" id="stock" formControlName="stock">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="d-flex align-items-center col-md-6 mb-3">
+						<label for="edible">Is it edible? </label>
+						<input type="checkbox" id="edible" formControlName="isEdible">
+					</div>
+					<div class="col-md-6 mb-3">
+						<label for="country">Country</label>
+						<input readonly type="text" class="form-control" id="country" placeholder="Select a country from the list"
+							[value]="countryDisplay">
+					</div>
+				</div>
+				<hr class="mb-4">
+
+				<button class="btn btn-primary btn-lg btn-block" [disabled]="prodForm.invalid" type="submit">Submit</button>
+			</form>
+		</div>
+	</div>
+</div>
