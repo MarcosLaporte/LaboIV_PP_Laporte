@@ -1,0 +1,20 @@
+<main *ngIf="container">
+	<div class="col order-md-1">
+		<form [formGroup]="contForm" (ngSubmit)="updateCont()">
+			<input type="text" readonly class="form-control mb-1 h-100" id="code" placeholder="Code" formControlName="code">
+			<input type="text" class="form-control mb-1 h-100" id="company" placeholder="Company" formControlName="company">
+			<div class="row">
+				<div class="col-md-8">
+					<label for="color">Choose container color</label>
+				</div>
+				<div class="col">
+					<input type="color" class="form-control mb-1" id="color" formControlName="color">
+				</div>
+			</div>
+			
+			<input type="number" min="100" step="50" class="form-control mb-1 h-100" id="strgCapacity" placeholder="Storage Capacity" formControlName="strgCapacity">
+
+			<button class="w-100 btn btn-lg btn-primary" [disabled]="contForm.invalid" type="submit">Update</button>
+		</form>
+	</div>
+</main>

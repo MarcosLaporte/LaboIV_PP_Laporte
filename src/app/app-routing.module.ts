@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
+import { AdmContainerComponent } from './components/container/adm-container/adm-container.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -11,6 +12,7 @@ const routes: Routes = [
 		path: 'products',
 		loadChildren: () => import('./modules/products/products.module').then(m => m.ProductsModule)
 	},
+	{ path: 'container', component: AdmContainerComponent },
 ];
 
 @NgModule({

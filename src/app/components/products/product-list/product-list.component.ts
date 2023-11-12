@@ -17,9 +17,7 @@ export class ProductListComponent {
 	constructor(private db: DatabaseService) { }
 
 	ngOnInit() {
-		Loader.fire();
 		this.db.listenColChanges<Product>('products', this.products, this.filterFunc, this.sortFunc);
-		Loader.close();
 	}
 
 	onSelect(product: Product) {

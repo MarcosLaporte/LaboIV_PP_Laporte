@@ -1,0 +1,7 @@
+<main *ngIf="container">
+	<div class="col order-md-1">
+		<input type="text" readonly class="form-control mb-1 h-100" id="code" placeholder="Code" [(ngModel)]="container.code" name="code">
+		<input type="text" readonly class="form-control mb-1 h-100" id="company" placeholder="Company" [(ngModel)]="container.company" name="company">
+		<button class="w-100 btn btn-lg btn-primary" type="submit" (click)="deleteCont()">Delete</button>
+	</div>
+</main>

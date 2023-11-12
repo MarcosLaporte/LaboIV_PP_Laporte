@@ -67,6 +67,6 @@ export class NewProductComponent {
 		this.db.addData('products', prod)
 			.then(() => ToastSuccess.fire('Product uploaded!'))
 			.catch(() => ToastError.fire('There was a problem.'));
-		
+		Loader.close();
 	}
 }

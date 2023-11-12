@@ -12,12 +12,22 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { environment } from 'src/environments/environment';
+import { AdmContainerComponent } from './components/container/adm-container/adm-container.component';
+import { AddContainerComponent } from './components/container/add-container/add-container.component';
+import { DeleteContainerComponent } from './components/container/delete-container/delete-container.component';
+import { ModifyContainerComponent } from './components/container/modify-container/modify-container.component';
+import { ContainerListComponent } from './components/container/container-list/container-list.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		HomeComponent,
 		LoginComponent,
+		AdmContainerComponent,
+		AddContainerComponent,
+		DeleteContainerComponent,
+		ModifyContainerComponent,
+		ContainerListComponent,
 	],
 	imports: [
 		BrowserModule,

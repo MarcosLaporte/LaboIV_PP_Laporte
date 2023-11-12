@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, addDoc, collection, deleteDoc, doc, getDocs, setDoc } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, deleteDoc, doc, getDocs, setDoc, updateDoc } from '@angular/fire/firestore';
 import { User } from '../classes/user';
 import { QuerySnapshot, onSnapshot, query } from 'firebase/firestore';
 
@@ -42,6 +42,18 @@ export class DatabaseService {
 		return data.id;
 	}
 
+	updateDoc(dbPath: string, docId: string, data: any) {
+		const docRef = doc(this.firestore, dbPath, docId);
+
+		return updateDoc(docRef, { ...data });
+	}
+
+	deleteDoc(dbPath: string, docId: string) {
+		const docRef = doc(this.firestore, dbPath, docId);
+
+		return deleteDoc(docRef);
+	}
+
 	async searchUserByEmail(email: string): Promise<User> {
 		const arrayUsers = await this.getData<User>('users');
 		const index = arrayUsers.findIndex(u => u.email === email);
@@ -50,7 +62,7 @@ export class DatabaseService {
 		return arrayUsers[index];
 	}
 
-	listenColChanges<T>(colPath: string, arrayPointer: Array<T>, filterFunc?: (item: T) => boolean, sortFunc?: (a: T, b: T) => number) {
+	listenColChanges<T extends { id: string }>(colPath: string, arrayPointer: Array<T>, filterFunc?: (item: T) => boolean, sortFunc?: (a: T, b: T) => number) {
 		const col = collection(this.firestore, colPath);
 		const q = query(col);
 
@@ -59,7 +71,15 @@ export class DatabaseService {
 				const data = change.doc.data();
 				const newData = data as T;
 				if (!filterFunc || filterFunc(newData)) {
-					arrayPointer.push(newData);
+					if (change.type === 'added') {
+						arrayPointer.push(newData);
+					} else {
+						const index = arrayPointer.findIndex(t => t.id === newData.id);
+						if (change.type === 'modified')
+							arrayPointer[index] = newData;
+						else
+							arrayPointer.splice(index, 1);
+					}
 				}
 			})
 
