@@ -14,7 +14,10 @@ export class ProductListComponent {
 	@Input() filterFunc: (prod: Product) => boolean = () => true;
 	sortFunc: (a: Product, b: Product) => number = (a, b) => a.desc > b.desc ? 1 : -1;
 
-	constructor(private db: DatabaseService) { }
+	constructor(private db: DatabaseService) {
+		db.getData<Product>('products')
+			.then(data => this.products = data);
+	}
 
 	ngOnInit() {
 		this.db.listenColChanges<Product>('products', this.products, this.filterFunc, this.sortFunc);

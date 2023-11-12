@@ -9,7 +9,6 @@ import { Loader, ToastError, ToastSuccess } from 'src/environments/environment';
 	styleUrls: ['./adm-container.component.css']
 })
 export class AdmContainerComponent {
-	/* un componente que borra un componente que tiene por INPUT. */
 	chosenCont: Container | undefined;
 
 	constructor(private db: DatabaseService) { }

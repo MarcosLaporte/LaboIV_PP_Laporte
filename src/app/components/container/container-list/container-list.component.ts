@@ -12,7 +12,10 @@ export class ContainerListComponent {
 	@Input() protected containers: Array<Container> = [];
 	sortFunc: (a: Container, b: Container) => number = (a, b) => a.company > b.company ? 1 : -1;
 
-	constructor(private db: DatabaseService) { }
+	constructor(private db: DatabaseService) {
+		db.getData<Container>('containers')
+			.then(data => this.containers = data);
+	}
 
 	ngOnInit() {
 		this.db.listenColChanges<Container>('containers', this.containers, undefined, this.sortFunc);
