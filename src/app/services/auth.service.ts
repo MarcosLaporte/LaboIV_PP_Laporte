@@ -9,18 +9,6 @@ import { DatabaseService } from './database.service';
 })
 export class AuthService {
 	//#region Properties, Subjects and Observables
-	private _urlRedirectSub = new BehaviorSubject<string>('home');
-	public urlRedirectObs = this._urlRedirectSub.asObservable();
-	/**
-	 * Returns the route where the user should be redirected if a guard is activated.
-	 */
-	public get UrlRedirect(): string {
-		return this._urlRedirectSub.getValue();
-	}
-	public set UrlRedirect(value: string) {
-		this._urlRedirectSub.next(value);
-	}
-
 	private _loggedUserSub = new BehaviorSubject<User | null>(null);
 	public loggedUserObs = this._loggedUserSub.asObservable();
 	public get LoggedUser(): User | null {

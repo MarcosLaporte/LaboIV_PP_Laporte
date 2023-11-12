@@ -1,0 +1,11 @@
+<ul class="list-group mb-3">
+	<li class="list-group-item bg-light d-flex justify-content-between align-items-center row"
+		(click)="onSelect(prod)" *ngFor="let prod of products" role="button">
+		<div class="col-md-3 border-end">
+			<i>{{prod.code}}</i>
+		</div>
+		<div class="col">
+			<i>{{prod.desc}}</i>
+		</div>
+	</li>
+</ul>

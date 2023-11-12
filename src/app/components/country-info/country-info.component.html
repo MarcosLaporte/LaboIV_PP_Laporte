@@ -1,0 +1,11 @@
+<div *ngIf="chosenCountry">
+	<ul>
+		<li class="my-1 list-customstyled"><h4>{{countryInfo['name']}}</h4></li>
+		<li class="my-1 list-customstyled">Código: {{countryInfo['cca3']}}</li>
+		<li class="my-1 list-customstyled">Capital: {{countryInfo['capital']}}</li>
+		<li class="my-1 list-customstyled">Subregión: {{countryInfo['subregion']}}</li>
+	</ul>
+	<div class="bandera d-flex justify-content-center">
+		<img [src]="countryInfo['flag']" height="50">
+	</div>
+</div>

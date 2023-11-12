@@ -1,0 +1,8 @@
+<div *ngIf="chosenProd">
+	<h1><i>{{ chosenProd.desc }}</i></h1>
+	<p class="mb-1">Code: {{ chosenProd.code }}</p>
+	<p class="mb-1">Price: {{ chosenProd.price }}</p>
+	<p class="mb-1">Stock: {{ chosenProd.stock }}</p>
+	<p class="mb-1">Country: {{ chosenProd.countryFrom.name }}</p>
+	<p class="mb-1">Edible: {{ chosenProd.edible }}</p>
+</div>

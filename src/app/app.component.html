@@ -5,8 +5,10 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 							<li class="nav-item"><a class="nav-link" routerLink="/">Home</a></li>
-							<li class="nav-item"><a class="nav-link" routerLink="/products/new-product">Alta Producto</a></li>
-							<li class="nav-item"><a class="nav-link" routerLink="/login">Account</a></li>
+							<li class="nav-item"><a class="nav-link" *ngIf="isLogged" routerLink="/products/new-product">New Product</a></li>
+							<li class="nav-item"><a class="nav-link" *ngIf="isLogged" routerLink="/products/details">Product Details</a></li>
+							<li class="nav-item"><a class="nav-link" routerLink="/products/list">Product List</a></li>
+							<li class="nav-item"><a class="nav-link" routerLink="/login">Login</a></li>
 					</ul>
 			</div>
 	</div>

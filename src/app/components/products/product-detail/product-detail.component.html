@@ -1,0 +1,22 @@
+<main>
+	<div class="container py-4">
+		<div class="p-5 mb-4 bg-body-tertiary rounded-3">
+			<div class="container-fluid py-5">
+				<app-product-list (prodEv)="selectProduct($event)"></app-product-list>
+			</div>
+		</div>
+
+		<div class="row align-items-md-stretch">
+			<div class="col-md-6">
+				<div class="h-100 p-5 text-bg-dark rounded-3">
+					<app-product-description [chosenProd]="chosenProd"></app-product-description>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="h-100 p-5 bg-body-tertiary border rounded-3">
+					<app-country-info [chosenCountry]="chosenProd?.countryFrom"></app-country-info>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>

@@ -1,9 +1,9 @@
 <ul class="list-group mb-3">
-	<li class="country-btn list-group-item bg-light d-flex justify-content-between align-items-center w-99" (click)="onSelect(pais)"
-		*ngFor="let pais of paises" role="button">
+	<li class="country-btn list-group-item bg-light d-flex justify-content-between align-items-center w-99"
+		(click)="onSelect(country)" *ngFor="let country of countries" role="button">
 		<div>
-			<i class="text-muted">{{pais.name.common}}</i>
+			<i class="text-muted">{{country.name.common}}</i>
 		</div>
-		<img [src]="pais.flags.svg" [alt]="pais.cca3" height="30">
+		<img [src]="country.flags.svg" [alt]="country.cca3" height="30">
 	</li>
 </ul>

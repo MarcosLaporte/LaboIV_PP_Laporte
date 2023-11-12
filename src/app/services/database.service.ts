@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import { DocumentData, DocumentReference, Firestore, addDoc, collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, deleteDoc, doc, getDocs, setDoc } from '@angular/fire/firestore';
 import { User } from '../classes/user';
+import { QuerySnapshot, onSnapshot, query } from 'firebase/firestore';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class DatabaseService {
 	constructor(private firestore: Firestore) { }
 
-	async getData<T>(dbPath: string): Promise<Array<T>> {
-		const col = collection(this.firestore, dbPath);
+	async getData<T>(colPath: string): Promise<Array<T>> {
+		const col = collection(this.firestore, colPath);
 
 		const querySnapshot = await getDocs(col);
 		const arrAux: Array<T> = [];
@@ -21,13 +22,13 @@ export class DatabaseService {
 		return arrAux;
 	}
 
-	async addData(dbPath: string, data: any) {
-		const col = collection(this.firestore, dbPath);
+	async addData(colPath: string, data: any) {
+		const col = collection(this.firestore, colPath);
 		await addDoc(col, { ...data });
 	}
 
-	async addDataAutoId(dbPath: string, data: any): Promise<string> {
-		const col = collection(this.firestore, dbPath);
+	async addDataAutoId(colPath: string, data: any): Promise<string> {
+		const col = collection(this.firestore, colPath);
 		const newDoc = doc(col);
 		data.id = newDoc.id;
 
@@ -41,26 +42,29 @@ export class DatabaseService {
 		return data.id;
 	}
 
-	updateDoc(dbPath: string, docId: string, data: any) {
-		const docRef = doc(this.firestore, dbPath, docId);
-
-		return updateDoc(docRef, { ...data });
-	}
-
-	getDocRef(dbPath: string, docId: string): DocumentReference<DocumentData> {
-		return doc(this.firestore, dbPath, docId);
-	}
-
-	async getObjDataByRef<T>(docRef: DocumentReference<DocumentData>) {
-		const docSnap = await getDoc(docRef);
-		return docSnap.data() as T;
-	}
-	
 	async searchUserByEmail(email: string): Promise<User> {
 		const arrayUsers = await this.getData<User>('users');
 		const index = arrayUsers.findIndex(u => u.email === email);
 		if (index === -1) throw new Error('This email address is not registered.');
 
 		return arrayUsers[index];
+	}
+
+	listenColChanges<T>(colPath: string, arrayPointer: Array<T>, filterFunc?: (item: T) => boolean, sortFunc?: (a: T, b: T) => number) {
+		const col = collection(this.firestore, colPath);
+		const q = query(col);
+
+		onSnapshot(q, (addSnap: QuerySnapshot) => {
+			addSnap.docChanges().forEach((change) => {
+				const data = change.doc.data();
+				const newData = data as T;
+				if (!filterFunc || filterFunc(newData)) {
+					arrayPointer.push(newData);
+				}
+			})
+
+			if (sortFunc)
+				arrayPointer.sort(sortFunc);
+		});
 	}
 }
