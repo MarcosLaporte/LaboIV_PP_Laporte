@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
-import { AdmContainerComponent } from './components/container/adm-container/adm-container.component';
 import { adminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
@@ -14,9 +13,9 @@ const routes: Routes = [
 		loadChildren: () => import('./modules/products/products.module').then(m => m.ProductsModule)
 	},
 	{
-		path: 'container',
+		path: 'containers',
 		canActivate: [adminGuard],
-		component: AdmContainerComponent
+		loadChildren: () => import('./modules/containers/containers.module').then(m => m.ContainersModule),
 	},
 ];
 

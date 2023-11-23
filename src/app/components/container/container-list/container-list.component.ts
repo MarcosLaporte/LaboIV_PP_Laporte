@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, Input, SimpleChanges } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { Container } from 'src/app/classes/container';
 import { DatabaseService } from 'src/app/services/database.service';
 
@@ -9,13 +9,10 @@ import { DatabaseService } from 'src/app/services/database.service';
 })
 export class ContainerListComponent {
 	@Output() contEv = new EventEmitter<Container>();
-	@Input() protected containers: Array<Container> = [];
+	containers: Array<Container> = [];
 	sortFunc: (a: Container, b: Container) => number = (a, b) => a.company > b.company ? 1 : -1;
 
-	constructor(private db: DatabaseService) {
-		db.getData<Container>('containers')
-			.then(data => this.containers = data);
-	}
+	constructor(private db: DatabaseService) { }
 
 	ngOnInit() {
 		this.db.listenColChanges<Container>('containers', this.containers, undefined, this.sortFunc);

@@ -1,11 +1,13 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, inject } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.css']
+	styleUrls: ['./app.component.css'],
+	encapsulation: ViewEncapsulation.None,
+	changeDetection: ChangeDetectionStrategy.Default
 })
 export class AppComponent {
 	title = 'LaboIV_PP_Laporte';
@@ -19,10 +21,7 @@ export class AppComponent {
 		inject(AuthService).loggedUserObs.subscribe(user => {
 			this.isAdmin = !!user && user.role === 'admin';
 		});
-	}
 
-	ngOnInit() {
 		this.router.navigateByUrl('home');
 	}
-
 }

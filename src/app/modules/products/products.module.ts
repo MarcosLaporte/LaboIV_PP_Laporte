@@ -18,8 +18,8 @@ import { PublicListComponent } from '../../components/products/public-list/publi
 		ProductDetailComponent,
 		ProductListComponent,
 		ProductDescriptionComponent,
-  CountryInfoComponent,
-  PublicListComponent,
+		CountryInfoComponent,
+		PublicListComponent,
 	],
 	imports: [
 		CommonModule,

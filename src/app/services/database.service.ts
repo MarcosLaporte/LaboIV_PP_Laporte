@@ -62,15 +62,16 @@ export class DatabaseService {
 		return arrayUsers[index];
 	}
 
-	listenColChanges<T extends { id: string }>(colPath: string, arrayPointer: Array<T>, filterFunc?: (item: T) => boolean, sortFunc?: (a: T, b: T) => number) {
+	listenColChanges<T extends { id: string }>(colPath: string, arrayPointer: Array<T>, filterFunc?: (item: T) => boolean, sortFunc?: (a: any, b: any) => number, transform?: (item: T) => Promise<T>) {
 		const col = collection(this.firestore, colPath);
 		const q = query(col);
 
-		onSnapshot(q, (addSnap: QuerySnapshot) => {
-			addSnap.docChanges().forEach((change) => {
+		onSnapshot(q, async (addSnap: QuerySnapshot) => {
+			for (const change of addSnap.docChanges()) {
 				const data = change.doc.data();
-				const newData = data as T;
+				const newData = transform ? await transform(data as T) : data as T;
 				if (!filterFunc || filterFunc(newData)) {
+					console.log(newData);
 					if (change.type === 'added') {
 						arrayPointer.push(newData);
 					} else {
@@ -81,7 +82,7 @@ export class DatabaseService {
 							arrayPointer.splice(index, 1);
 					}
 				}
-			})
+			}
 
 			if (sortFunc)
 				arrayPointer.sort(sortFunc);
