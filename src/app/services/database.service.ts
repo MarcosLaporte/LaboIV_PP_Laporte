@@ -71,7 +71,6 @@ export class DatabaseService {
 				const data = change.doc.data();
 				const newData = transform ? await transform(data as T) : data as T;
 				if (!filterFunc || filterFunc(newData)) {
-					console.log(newData);
 					if (change.type === 'added') {
 						arrayPointer.push(newData);
 					} else {

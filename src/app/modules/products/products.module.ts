@@ -25,6 +25,7 @@ import { PublicListComponent } from '../../components/products/public-list/publi
 		CommonModule,
 		ProductsRoutingModule,
 		ReactiveFormsModule,
-	]
+	],
+	exports: [ProductListComponent]
 })
 export class ProductsModule { }
