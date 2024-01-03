@@ -9,6 +9,8 @@ import { DatabaseService } from './database.service';
 })
 export class AuthService {
 	//#region Properties, Subjects and Observables
+	public urlRedirect: string = 'login';
+
 	private _loggedUserSub = new BehaviorSubject<User | null>(null);
 	public loggedUserObs = this._loggedUserSub.asObservable();
 	public get LoggedUser(): User | null {
@@ -31,29 +33,40 @@ export class AuthService {
 	constructor(private afAuth: Auth, private db: DatabaseService) { }
 
 	async signIn(email: string, password: string) {
-		let user: User | null = null;
 		try {
 			await signInWithEmailAndPassword(this.afAuth, email, password);
-			user = await this.db.searchUserByEmail(email);
-
+			this.FireUser = this.afAuth.currentUser;
+			await this.db.searchUserByEmail(this.FireUser?.email!)
+				.then(async user => {
+					this.LoggedUser = user;
+					this.urlRedirect = this.LoggedUser.isValid ? 'home' : 'terms-conditions';
+				})
 		} catch (error: any) {
 			if (error.code === 'auth/invalid-login-credentials') {
-				const userId = await this.signUp(email, password);
-				user = new User('employee', email, password, userId);
+				throw new Error("Credentials don't match.");
+			} else {
+				throw error;
 			}
-			else throw error;
-
-		} finally {
-			this.LoggedUser = user;
-			this.FireUser = this.afAuth.currentUser;
 		}
 	}
 
-	async signUp(email: string, password: string) {
-		return createUserWithEmailAndPassword(this.afAuth, email, password)
-			.then(() => {
-				return this.db.addDataAutoId('users', { email: email, password: password });
-			});
+	async signUp(user: User) {
+		return createUserWithEmailAndPassword(this.afAuth, user.email, user.password)
+			.then(async userCredential => {
+				const newUser = this.afAuth.currentUser
+				this.FireUser = newUser;
+				this.LoggedUser = user;
+				this.urlRedirect = 'terms-conditions';
+
+				await this.db.addDataAutoId('users', user);
+
+				return userCredential
+			})
+			.catch(() => this.urlRedirect = 'login');
+	}
+
+	updateLogged() {
+		
 	}
 
 }

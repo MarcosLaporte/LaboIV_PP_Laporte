@@ -1,0 +1,59 @@
+<div class="main min-vh-100 text-center bg-custom-gradient">
+	<form [formGroup]="signUpForm" class="form-signin bg-light bg-opacity-50 rounded" (ngSubmit)="signUp()">
+		<h1 class="h3 mb-3 font-weight-normal">Member signUp</h1>
+
+		<div class="row">
+			<div class="col-md-6 mb-3">
+				<label for="firstName">First name</label>
+				<input type="text" class="form-control" id="firstName" name="firstName" formControlName="firstName"
+					[class]="signUpForm.controls['firstName'].errors !== null && signUpForm.controls['firstName'].touched ? 'border-danger border-2' : ''">
+			</div>
+
+			<div class="col-md-6 mb-3">
+				<label for="lastName">Last name</label>
+				<input type="text" class="form-control" id="lastName" name="lastName" formControlName="lastName"
+					[class]="signUpForm.controls['lastName'].errors !== null && signUpForm.controls['lastName'].touched ? 'border-danger border-2' : ''">
+			</div>
+		</div>
+
+		<input type="email" id="inputEmail" class="form-control" placeholder="Email address" formControlName="email"
+			name="email" required>
+		<div class="bg-danger bg-opacity-50 m-auto w-75"
+			*ngIf="signUpForm.controls['email'].errors !== null && signUpForm.controls['email'].touched">
+			<small *ngIf="signUpForm.controls['email'].errors!['required']">
+				Email is required.
+			</small>
+			<small *ngIf="signUpForm.controls['email'].errors!['email']">
+				Email is invalid.
+			</small>
+		</div>
+
+		<input type="password" id="inputPassword" class="form-control mb-0" placeholder="Password"
+			formControlName="password" name="password" required>
+		<div class="bg-danger bg-opacity-50 m-auto w-75"
+			*ngIf="signUpForm.controls['password'].errors !== null && signUpForm.controls['password'].touched">
+			<small *ngIf="signUpForm.controls['password'].errors!['required']">
+				Password is required.
+			</small>
+		</div>
+
+		<input type="password" id="inputPassCheck" class="form-control mb-0" placeholder="Password"
+			formControlName="passCheck" name="passCheck" required>
+		<div class="bg-danger bg-opacity-50 m-auto w-75"
+			*ngIf="signUpForm.controls['passCheck'].errors !== null && signUpForm.controls['passCheck'].touched">
+			<small *ngIf="signUpForm.controls['passCheck'].errors!['required']">
+				Passwords must match.
+			</small>
+		</div>
+
+		<button class="btn btn-lg btn-primary btn-block mt-3" [disabled]="signUpForm.invalid" type="submit">Sign in</button>
+
+		<ul class="nav justify-content-center">
+			<li class="nav-item">
+				<a class="nav-link active text-decoration-underline" routerLink="/login">Login</a>
+			</li>
+		</ul>
+	</form>
+</div>
+
+<router-outlet></router-outlet>

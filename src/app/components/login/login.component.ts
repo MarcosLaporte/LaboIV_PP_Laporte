@@ -39,7 +39,7 @@ export class LoginComponent {
 			await this.auth.signIn(email, password);
 			Loader.close();
 			
-			this.router.navigateByUrl('home')
+			this.router.navigateByUrl(this.auth.urlRedirect)
 		} catch (error: any) {
 			ToastError.fire('Oops...', error.message);
 		}

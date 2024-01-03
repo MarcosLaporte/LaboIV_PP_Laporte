@@ -12,12 +12,16 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { environment } from 'src/environments/environment';
+import { RegisterComponent } from './components/register/register.component';
+import { TermsConditionsComponent } from './components/terms-conditions/terms-conditions.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		HomeComponent,
 		LoginComponent,
+		RegisterComponent,
+  	TermsConditionsComponent,
 	],
 	imports: [
 		BrowserModule,
